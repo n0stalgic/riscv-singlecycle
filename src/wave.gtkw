@@ -1,0 +1,119 @@
+[*]
+[*] GTKWave Analyzer v3.3.117 (w)1999-2023 BSI
+[*] Tue Feb  6 04:10:24 2024
+[*]
+[dumpfile] "/home/chris/riscv/singlecycle/src/wave.vcd"
+[dumpfile_mtime] "Tue Feb  6 04:01:06 2024"
+[dumpfile_size] 1215264
+[savefile] "/home/chris/riscv/singlecycle/src/wave.gtkw"
+[timestart] 8
+[size] 2880 1661
+[pos] -1 -1
+*-4.000000 8 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.riscv_sys.
+[treeopen] TOP.riscv_sys.rvcpu.
+[sst_width] 360
+[signals_width] 521
+[sst_expanded] 1
+[sst_vpaned_height] 485
+@22
+TOP.riscv_sys.rvcpu.iAddr[31:0]
+@28
+TOP.riscv_sys.clk
+@800200
+-Register_File
+@22
+TOP.riscv_sys.rvcpu.regfile.A1[4:0]
+TOP.riscv_sys.rvcpu.regfile.A2[4:0]
+TOP.riscv_sys.rvcpu.regfile.A3[4:0]
+TOP.riscv_sys.rvcpu.regfile.WD3[31:0]
+@28
+TOP.riscv_sys.rvcpu.regfile.WE3
+@1000200
+-Register_File
+@c00200
+-Registers
+@22
+TOP.riscv_sys.rvcpu.regfile.registers[0][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[1][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[2][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[3][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[4][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[5][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[6][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[7][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[8][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[9][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[10][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[11][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[12][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[13][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[14][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[15][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[16][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[17][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[18][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[19][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[20][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[21][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[22][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[23][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[24][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[25][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[26][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[27][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[28][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[29][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[30][31:0]
+TOP.riscv_sys.rvcpu.regfile.registers[31][31:0]
+@1401200
+-Registers
+@800200
+-Instruction_Mem
+@22
+TOP.riscv_sys.imem.rd[31:0]
+TOP.riscv_sys.imem.a[31:0]
+TOP.riscv_sys.rvcpu.iMemData[31:0]
+@1000200
+-Instruction_Mem
+@800200
+-PC_Calculation
+@22
+TOP.riscv_sys.rvcpu.pc_reg.Q[31:0]
+TOP.riscv_sys.rvcpu.PCTarget[31:0]
+TOP.riscv_sys.rvcpu.PCPlus4[31:0]
+TOP.riscv_sys.rvcpu.iAddr[31:0]
+TOP.riscv_sys.rvcpu.ImmExt[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_adder.A[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_adder.B[31:0]
+@1000200
+-PC_Calculation
+@c00200
+-Extend_Unit
+@22
+TOP.riscv_sys.rvcpu.extender.ImmExt[31:0]
+@28
+TOP.riscv_sys.rvcpu.extender.ImmSrc[2:0]
+@22
+TOP.riscv_sys.rvcpu.extender.Instr[31:7]
+@1401200
+-Extend_Unit
+@800200
+-ALU
+@29
+TOP.riscv_sys.rvcpu.cntrl.op[6:0]
+@22
+TOP.riscv_sys.rvcpu.ALU.ALUControl[3:0]
+TOP.riscv_sys.rvcpu.ALU.A[31:0]
+TOP.riscv_sys.rvcpu.ALU.B[31:0]
+@28
+TOP.riscv_sys.rvcpu.ALU.N
+@22
+TOP.riscv_sys.rvcpu.ALU.Q[31:0]
+@28
+TOP.riscv_sys.rvcpu.ALU.Z
+@1000200
+-ALU
+[pattern_trace] 1
+[pattern_trace] 0
