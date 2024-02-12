@@ -1,17 +1,8 @@
-C_SRCS   = riscvcpu_sim_c.c
+C_SRCS   = rv_test.c
 
-VERILOG_SRCS = alu.v \
-			   dff.v \
-			   extend.v \
-			   idecode.v \
-			   mux.v \
-			   regfile.v \
+VERILOG_SRCS = *.v
 
-SYSTEM_VERILOG_SRCS = riscv_sys.sv \
-					  aludec.sv \
-				      controller.sv \
-					  mem.sv \
-					  riscvmulti.sv 
+SYSTEM_VERILOG_SRCS = *.sv
 
 VERILOG_HEADERS = opcode.vh
 VERILOG_TOP     = riscv_sys
@@ -22,7 +13,7 @@ VCD_FILE          = wave.vcd
 GTKWAVE_FORMAT    = wave.gtkw
 
 ARCH = rv32i
-C_BASE   = riscvcpu_sim_c
+C_BASE   = rv_test
 
 ELF_TARGET  = $(C_BASE).elf
 BIN_TARGET  = $(C_BASE).bin
@@ -42,7 +33,8 @@ VVFLAGS = -Wno-WIDTHEXPAND -Wno-MULTITOP -Wno-CASEINCOMPLETE --trace-max-array $
 
 OCFLAGS = -O binary $(OBJFLAGS)
 DISASSEMBLER_FLAGS = no-aliases,numeric
-ODFLAGS = -d --disassembler-options=$(DISASSEMBLER_FLAGS) $(OBJFLAGS)
+ODFLAGS = -d $(OBJFLAGS)
+ODOPTS  = --disassembler-options=$(DISASSEMBLER_FLAGS) --adjust-vma=0x4
 LDFLAGS = -T $(C_BASE).ld -Wl,-Map=$(C_BASE).map -nostdlib
 
 C_ELFS  = $(C_SRCS:.c=.elf)
@@ -53,9 +45,13 @@ $(ELF_TARGET) : $(C_SRCS)
 
 .PHONY: disassemble_c
 disassemble_c: $(C_ELFS)
-	@echo "#------- C DISASSEMBLY -----------#"
+	@echo "#------- C ALIASED DISASSEMBLY -----------#"
 	$(OD) $(ODFLAGS) $<
-	@echo "#------- END C DISASSEMBLY -----------#"
+	@echo "#------- END ALIASED C DISASSEMBLY -----------#"
+	@echo "#------- C NON-ALIASED DISASSEMBLY -----------#"
+	$(OD) $(ODOPTS) $(ODFLAGS) $<
+	@echo "#------- END NON-ALIASED C DISASSEMBLY -----------#"
+	
 
 .PHONY: build
 build: $(ELF_TARGET) disassemble_c

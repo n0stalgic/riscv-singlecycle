@@ -18,12 +18,12 @@ module dmem # (
 
 reg [7:0] RAM [MEM_SIZE*4-1:0];
 
-always @ (posedge clk) begin
+always @ (*) begin
   if (rde) begin
-    rd[7:0]   <= RAM[a + 3];
-    rd[15:8]  <= RAM[a + 2];
-    rd[23:16] <= RAM[a + 1];
-    rd[31:24] <= RAM[a];
+    rd[7:0]   = RAM[a];
+    rd[15:8]  = RAM[a + 1];
+    rd[23:16] = RAM[a + 2];
+    rd[31:24] = RAM[a + 3];
   end
   
 end

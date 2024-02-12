@@ -33,3 +33,24 @@ module mux_3_1 (
         endcase
 
 endmodule
+
+module mux_4_1 (
+    sel, in1, in2, in3, in4, dout
+
+);
+
+    input [1:0] sel;
+    input [31:0] in1, in2, in3, in4;
+    output reg [31:0] dout;
+
+
+    always @ (*)
+        case (sel)
+            2'b00: dout = in1; 
+            2'b01: dout = in2;  
+            2'b10: dout = in3;
+            2'b11: dout = in4;
+        endcase
+
+endmodule
+

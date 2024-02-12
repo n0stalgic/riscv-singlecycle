@@ -22,11 +22,11 @@ reg neq, blt, ltu;
 /*verilator public_off*/
 
 assign Z  = (Q == 32'b0);
-assign N  = (sum[31] == 1'b1 || ltu);
+assign N  = (sum[31] == 1'b1 || (ltu && ALUControl == 4'b1010));
 
-assign sll = A << B[4:0];
-assign srl = A >> B[4:0];
-assign sra = A >>> B[4:0];
+assign sll =  A <<  B[4:0];
+assign srl =  A >>  B[4:0];
+assign sra =  A >>> B[4:0];
 
 assign ltu = (A < B);
 
@@ -41,7 +41,6 @@ begin
         4'b0001: Q = sum;                   // SUB
         4'b0010: Q = A & B;                 // AND
         4'b0011: Q = A | B;                 // OR
-        4'b0100: Q = {{sum[31:1]}, 1'b0};   // JALR calculation - reuse ALU
         4'b0101: Q = sum[31];               // SLT: do A - B, if result is neg (sum[31] == 1)
         4'b0110: Q = A ^ B;                 // XOR
         4'b0111: Q = sll;                   // SLL

@@ -1,22 +1,23 @@
 [*]
-[*] GTKWave Analyzer v3.3.117 (w)1999-2023 BSI
-[*] Tue Feb  6 04:10:24 2024
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Sun Feb 11 23:54:57 2024
 [*]
-[dumpfile] "/home/chris/riscv/singlecycle/src/wave.vcd"
-[dumpfile_mtime] "Tue Feb  6 04:01:06 2024"
-[dumpfile_size] 1215264
-[savefile] "/home/chris/riscv/singlecycle/src/wave.gtkw"
-[timestart] 8
-[size] 2880 1661
+[dumpfile] "/home/chris/asic/riscv_cpu/riscv-singlecycle/src/wave.vcd"
+[dumpfile_mtime] "Sun Feb 11 23:49:49 2024"
+[dumpfile_size] 1253000
+[savefile] "/home/chris/asic/riscv_cpu/riscv-singlecycle/src/wave.gtkw"
+[timestart] 290
+[size] 1489 1016
 [pos] -1 -1
-*-4.000000 8 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.000000 312 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.riscv_sys.
 [treeopen] TOP.riscv_sys.rvcpu.
-[sst_width] 360
-[signals_width] 521
+[treeopen] TOP.riscv_sys.rvcpu.cntrl.
+[sst_width] 233
+[signals_width] 253
 [sst_expanded] 1
-[sst_vpaned_height] 485
+[sst_vpaned_height] 486
 @22
 TOP.riscv_sys.rvcpu.iAddr[31:0]
 @28
@@ -32,9 +33,9 @@ TOP.riscv_sys.rvcpu.regfile.WD3[31:0]
 TOP.riscv_sys.rvcpu.regfile.WE3
 @1000200
 -Register_File
-@c00200
+@800201
 -Registers
-@22
+@23
 TOP.riscv_sys.rvcpu.regfile.registers[0][31:0]
 TOP.riscv_sys.rvcpu.regfile.registers[1][31:0]
 TOP.riscv_sys.rvcpu.regfile.registers[2][31:0]
@@ -67,7 +68,7 @@ TOP.riscv_sys.rvcpu.regfile.registers[28][31:0]
 TOP.riscv_sys.rvcpu.regfile.registers[29][31:0]
 TOP.riscv_sys.rvcpu.regfile.registers[30][31:0]
 TOP.riscv_sys.rvcpu.regfile.registers[31][31:0]
-@1401200
+@1000201
 -Registers
 @800200
 -Instruction_Mem
@@ -77,7 +78,7 @@ TOP.riscv_sys.imem.a[31:0]
 TOP.riscv_sys.rvcpu.iMemData[31:0]
 @1000200
 -Instruction_Mem
-@800200
+@c00200
 -PC_Calculation
 @22
 TOP.riscv_sys.rvcpu.pc_reg.Q[31:0]
@@ -86,8 +87,15 @@ TOP.riscv_sys.rvcpu.PCPlus4[31:0]
 TOP.riscv_sys.rvcpu.iAddr[31:0]
 TOP.riscv_sys.rvcpu.ImmExt[31:0]
 TOP.riscv_sys.rvcpu.pc_imm_adder.A[31:0]
+@28
+TOP.riscv_sys.rvcpu.cntrl.idecoder.ImmSel
+@22
 TOP.riscv_sys.rvcpu.pc_imm_adder.B[31:0]
-@1000200
+TOP.riscv_sys.rvcpu.PCImm[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_sel.in1[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_sel.dout[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_sel.in2[31:0]
+@1401200
 -PC_Calculation
 @c00200
 -Extend_Unit
@@ -101,10 +109,10 @@ TOP.riscv_sys.rvcpu.extender.Instr[31:7]
 -Extend_Unit
 @800200
 -ALU
-@29
+@28
 TOP.riscv_sys.rvcpu.cntrl.op[6:0]
-@22
 TOP.riscv_sys.rvcpu.ALU.ALUControl[3:0]
+@22
 TOP.riscv_sys.rvcpu.ALU.A[31:0]
 TOP.riscv_sys.rvcpu.ALU.B[31:0]
 @28
@@ -113,7 +121,121 @@ TOP.riscv_sys.rvcpu.ALU.N
 TOP.riscv_sys.rvcpu.ALU.Q[31:0]
 @28
 TOP.riscv_sys.rvcpu.ALU.Z
+@22
+TOP.riscv_sys.rvcpu.pc_mux.in1[31:0]
+TOP.riscv_sys.rvcpu.pc_mux.in2[31:0]
+TOP.riscv_sys.rvcpu.pc_mux.in3[31:0]
+TOP.riscv_sys.rvcpu.ALU.sum[31:0]
 @1000200
 -ALU
+@c00200
+-PC_Increment
+@22
+TOP.riscv_sys.rvcpu.pc_4_adder.A[31:0]
+TOP.riscv_sys.rvcpu.pc_4_adder.B[31:0]
+TOP.riscv_sys.rvcpu.pc_4_adder.Q[31:0]
+TOP.riscv_sys.rvcpu.pc_4_adder.WIDTH[31:0]
+@1401200
+-PC_Increment
+@800200
+-PC_Source_Mux
+@22
+TOP.riscv_sys.rvcpu.pc_mux.dout[31:0]
+TOP.riscv_sys.rvcpu.pc_mux.in1[31:0]
+TOP.riscv_sys.rvcpu.pc_mux.in2[31:0]
+TOP.riscv_sys.rvcpu.pc_mux.in3[31:0]
+@28
+TOP.riscv_sys.rvcpu.pc_mux.sel[1:0]
+TOP.riscv_sys.rvcpu.cntrl.idecoder.JumpLink
+TOP.riscv_sys.rvcpu.cntrl.idecoder.PCSrc[1:0]
+@1000200
+-PC_Source_Mux
+@c00200
+-PC_Jump_Mux
+@22
+TOP.riscv_sys.rvcpu.pc_imm_sel.dout[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_sel.in1[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_sel.in2[31:0]
+@28
+TOP.riscv_sys.rvcpu.pc_imm_sel.sel
+@1401200
+-PC_Jump_Mux
+@800200
+-PC_Jump_Adder
+@22
+TOP.riscv_sys.rvcpu.pc_imm_adder.A[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_adder.B[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_adder.Q[31:0]
+TOP.riscv_sys.rvcpu.pc_imm_adder.WIDTH[31:0]
+@1000200
+-PC_Jump_Adder
+@800200
+-Controller
+@28
+TOP.riscv_sys.rvcpu.cntrl.RegWrite
+TOP.riscv_sys.rvcpu.cntrl.MemWrite
+TOP.riscv_sys.rvcpu.cntrl.op[6:0]
+TOP.riscv_sys.rvcpu.cntrl.LSE
+TOP.riscv_sys.rvcpu.cntrl.LST[2:0]
+@22
+TOP.riscv_sys.rvcpu.cntrl.ALUControl[3:0]
+@28
+TOP.riscv_sys.rvcpu.cntrl.ImmSel
+TOP.riscv_sys.rvcpu.cntrl.Zero
+TOP.riscv_sys.rvcpu.cntrl.Negative
+TOP.riscv_sys.rvcpu.cntrl.ALUSrc
+@1000200
+-Controller
+@800200
+-Sign_Extender
+@22
+TOP.riscv_sys.rvcpu.extender.ImmExt[31:0]
+@28
+TOP.riscv_sys.rvcpu.extender.ImmSrc[2:0]
+@22
+TOP.riscv_sys.rvcpu.extender.Instr[31:7]
+@1000200
+-Sign_Extender
+@800200
+-Writeback_Mux
+@22
+TOP.riscv_sys.rvcpu.result_mux.dout[31:0]
+TOP.riscv_sys.rvcpu.result_mux.in1[31:0]
+TOP.riscv_sys.rvcpu.result_mux.in2[31:0]
+TOP.riscv_sys.rvcpu.result_mux.in3[31:0]
+TOP.riscv_sys.rvcpu.result_mux.in4[31:0]
+@28
+TOP.riscv_sys.rvcpu.result_mux.sel[1:0]
+@1000200
+-Writeback_Mux
+@800200
+-DRAM
+@22
+TOP.riscv_sys.dmem.a[31:0]
+@28
+TOP.riscv_sys.dmem.clk
+@22
+TOP.riscv_sys.dmem.rd[31:0]
+@28
+TOP.riscv_sys.dmem.rde
+@22
+TOP.riscv_sys.dmem.wd[31:0]
+@28
+TOP.riscv_sys.dmem.we
+@1000200
+-DRAM
+@22
+TOP.riscv_sys.dmem.RAM[492][7:0]
+TOP.riscv_sys.dmem.RAM[493][7:0]
+TOP.riscv_sys.dmem.RAM[494][7:0]
+TOP.riscv_sys.dmem.RAM[495][7:0]
+TOP.riscv_sys.dmem.RAM[488][7:0]
+TOP.riscv_sys.dmem.RAM[489][7:0]
+TOP.riscv_sys.dmem.RAM[490][7:0]
+TOP.riscv_sys.dmem.RAM[491][7:0]
+TOP.riscv_sys.dmem.RAM[484][7:0]
+TOP.riscv_sys.dmem.RAM[485][7:0]
+TOP.riscv_sys.dmem.RAM[486][7:0]
+TOP.riscv_sys.dmem.RAM[487][7:0]
 [pattern_trace] 1
 [pattern_trace] 0

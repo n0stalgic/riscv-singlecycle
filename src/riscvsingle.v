@@ -7,7 +7,6 @@ module riscvsingle (
             input  logic [31:0] iMemData, dMemData
 );
 
-    wire PCSrc;
     wire RegWrite;
     wire LSE;
     wire Zero;
@@ -15,11 +14,14 @@ module riscvsingle (
     wire ALUSrc;
     wire IRWrite;
     wire PCWrite;
+    wire ImmSel;
+    wire [1:0] PCSrc;
     wire [1:0] ResultSrc;
     wire [3:0] ALUControl;
     wire [2:0] ImmSrc;
     wire [2:0] LST;
     wire [31:0] PC;
+    wire [31:0] PCImm;
     wire [31:0] PCPlus4;
     wire [31:0] PCTarget;
     wire [31:0] PCNext;
@@ -31,6 +33,10 @@ module riscvsingle (
     wire [31:0] SrcA;
     wire [31:0] ALUResult;
     /*verilator public_off*/
+
+    assign dAddr = ALUResult;
+    assign WriteData = Rd2;
+    
 
     mux_3_1 pc_mux (
         .sel(PCSrc),
@@ -63,6 +69,7 @@ module riscvsingle (
     .MemWrite(MemWrite),
     .ALUSrc(ALUSrc),
     .ImmSrc(ImmSrc),
+    .ImmSel(ImmSel),
     .ALUControl(ALUControl),
     .PCSrc(PCSrc),
     .LST(LST),
@@ -89,8 +96,15 @@ module riscvsingle (
     .ImmExt(ImmExt)
     );
 
+    mux_2_1 pc_imm_sel (
+        .in1(iAddr),
+        .in2(1'b0),
+        .sel(ImmSel),
+        .dout(PCImm)
+    );
+
     adder pc_imm_adder(
-        .A(iAddr),
+        .A(PCImm),
         .B(ImmExt),
         .Q(PCTarget)
     );
@@ -108,14 +122,15 @@ module riscvsingle (
         .ALUControl(ALUControl),
         .Z(Zero),
         .N(Negative),
-        .Q(dAddr)
+        .Q(ALUResult)
     );
 
-    mux_3_1 result_mux (
+    mux_4_1 result_mux (
         .sel(ResultSrc),
         .in1(ALUResult),
         .in2(dMemData),
         .in3(PCPlus4),
+        .in4(PCTarget),
         .dout(Result)
     );
     

@@ -8,9 +8,10 @@ module ctrl_unit (
     output reg [1:0] ResultSrc,
     output reg MemWrite,
     output reg ALUSrc,
+    output reg ImmSel,
     output reg [2:0] ImmSrc,
     output reg RegWrite,
-    output reg PCSrc,
+    output reg [1:0] PCSrc,
     output reg LSE,
     output reg [2:0] LST,
     output reg [3:0] ALUControl
@@ -32,6 +33,7 @@ instr_decode idecoder(
     .MemWrite(MemWrite),
     .ALUSrc(ALUSrc),
     .ImmSrc(ImmSrc),
+    .ImmSel(ImmSel),
     .RegWrite(RegWrite),
     .ALUOp(ALUOp),
     .PCSrc(PCSrc)

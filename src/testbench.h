@@ -10,6 +10,8 @@
 #define HANG_RS1 0x0
 #define HANG_RS2 0x0
 #define BOOT_ROM_SIZE 0x4
+#define PC_MAIN_EXIT  0x58
+#define RV32I_ASM_TEST   0
 
 template<class MODULE> class TESTBENCH
 {
@@ -22,7 +24,7 @@ template<class MODULE> class TESTBENCH
         Vriscv_sys___024root* vriscv;
         bool sim_complete;
 
-        vluint32_t instr, opcode, rs1, rs2;
+        vluint32_t instr, opcode, rd, imm;
 
         TESTBENCH(VerilatedContext* contextp)
         {
@@ -66,16 +68,6 @@ template<class MODULE> class TESTBENCH
             }
         }
 
-        virtual void decode(void)
-        {
-            /* decode our hang instruction */
-            instr  = vriscv->riscv_sys__DOT__rvcpu__DOT__iMemData;
-            opcode = (instr & 0x7F);
-            rs1    = (instr & 0xF8000) >> 0xF; 
-            rs2    = (instr & 0x1F00000) >> 0x14;
-        
-        }
-
         virtual void tick(void)
         {
             vluint32_t ALU_actual;
@@ -93,7 +85,7 @@ template<class MODULE> class TESTBENCH
             m_core->eval();
             if (m_trace)
             {
-                m_trace->dump(10*m_tickcount - 2);
+                m_trace->dump(m_tickcount);
                 
             }
 
@@ -197,7 +189,23 @@ template<class MODULE> class TESTBENCH
                     ALU_expected = A >> B;
                     assert(ALU_actual == ALU_expected);
                     printf("OK - PC: %x\n", PC);
-                    break;               
+                    break;
+                case 0x09:
+                    if (opcode == 0x33)
+                    {
+                        printf("sra ");
+                        ALU_expected = A >> B;
+                    }
+                        
+                    else
+                    {
+                        printf("srai ");
+                        ALU_expected = (signed) A >> (signed) B;
+                    }
+
+                    assert(ALU_actual == ALU_expected);
+                    printf ("OK - PC %x\n", PC);
+                    break;          
             }
 
             // trigger falling edge
@@ -211,9 +219,22 @@ template<class MODULE> class TESTBENCH
             
         }
 
+        virtual void decode(void)
+        {
+            /* decode infinite loop instruction */
+            instr  = vriscv->riscv_sys__DOT__rvcpu__DOT__iMemData;
+            opcode = (instr & 0x7F);
+            rd     = (instr & 0xF80);
+            imm    = (instr & (1 << 20) | (instr & 0xFF000) | (instr & (1 << 11)) | (instr & 0x7FE)) >> 12;
+        
+        }
+
         virtual bool done(void)
         {
-            return (opcode == 0x63 && rs1 == HANG_RS1 && rs2 == HANG_RS2);
+            
+            vluint32_t PC = vriscv->riscv_sys__DOT__rvcpu__DOT__iAddr;
+            // printf("PC: 0x%x, opcode: 0x%x, imm: 0x%x, rd: 0x%x\n", PC, opcode, imm, rd);
+            return (opcode == 0x6F && imm == 0x0 && rd == 0x0);     // catch a jal to the current PC -- means we are in an infinite loop
         }
 
 };

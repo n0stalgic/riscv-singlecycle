@@ -34,7 +34,7 @@ module aludecoder(input  wire [1:0] ALUOp,
           ALUControl = 4'b0111;  // sll(i)
         7'b10101?0:
           ALUControl = 4'b1000;  // srl(i)
-        7'b1010111:
+        7'b10101?1:
           ALUControl = 4'b1001;  // sra(i)
 
       endcase

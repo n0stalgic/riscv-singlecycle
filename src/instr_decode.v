@@ -8,6 +8,7 @@ module instr_decode (
     output reg MemWrite,
     output reg ALUSrc,
     output reg [2:0] ImmSrc,
+    output reg ImmSel,
     output reg RegWrite,
     output reg [1:0] ALUOp,
     output reg [1:0] PCSrc
@@ -34,7 +35,7 @@ begin
 end
 
 always @ (*) begin
-    ResultSrc = 1'b0;
+    ResultSrc = 2'b00;
     MemWrite = 1'b0;
     ALUSrc = 1'b0;
     ImmSrc = 3'b00;
@@ -42,6 +43,8 @@ always @ (*) begin
     ALUOp = 2'b00;
     Branch = 1'b0;
     Jump   = 1'b0;
+    ImmSel = 1'b0;
+    JumpLink = 1'b0;
 
     casez (op)
         7'b0110011: begin         // R-type
@@ -52,16 +55,25 @@ always @ (*) begin
         end
         7'b0000011: begin         // mem load
             RegWrite  = 1'b1;
-            ResultSrc = 1'b1;
+            ResultSrc = 2'b01;
             ImmSrc    = 3'b000;
             ALUOp     = 2'b00;
             ALUSrc    = 1'b1;
+        end
+ 
+        7'b0100011: begin        // mem store
+            RegWrite = 1'b0;
+            ImmSrc   = 3'b001;
+            ALUOp    = 2'b00;
+            ALUSrc   = 1'b1;
+            MemWrite = 1'b1;
+            ResultSrc = 2'b01;
         end
 
         7'b0010011: begin         // I-Type
             RegWrite = 1'b1;
             ImmSrc   = 3'b000;
-            ALUSrc   = 1'b0;
+            ALUSrc   = 1'b1;
             ALUOp    = 2'b10;
         end
 
@@ -85,7 +97,19 @@ always @ (*) begin
             ALUOp  = 2'b00;
             JumpLink   = 1'b1;
             ResultSrc  = 2'b00;
-            
+        end
+        7'b0110111: begin         // lui
+            ImmSrc   = 3'b100;
+            ImmSel   = 1'b1;
+            RegWrite = 1'b1;
+            ResultSrc = 2'b11;
+
+        end
+        7'b0010111: begin        // auipc
+            ImmSrc = 3'b100;
+            RegWrite = 1'b1;
+            ImmSel   = 1'b0;
+            ResultSrc = 2'b11;
         end
 
 endcase
