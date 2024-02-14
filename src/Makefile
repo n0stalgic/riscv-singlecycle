@@ -33,8 +33,8 @@ VVFLAGS = -Wno-WIDTHEXPAND -Wno-MULTITOP -Wno-CASEINCOMPLETE --trace-max-array $
 
 OCFLAGS = -O binary $(OBJFLAGS)
 DISASSEMBLER_FLAGS = no-aliases,numeric
-ODFLAGS = -d $(OBJFLAGS)
-ODOPTS  = --disassembler-options=$(DISASSEMBLER_FLAGS) --adjust-vma=0x4
+ODFLAGS = -d $(OBJFLAGS) --adjust-vma=0x4 
+ODOPTS  = --disassembler-options=$(DISASSEMBLER_FLAGS) 
 LDFLAGS = -T $(C_BASE).ld -Wl,-Map=$(C_BASE).map -nostdlib
 
 C_ELFS  = $(C_SRCS:.c=.elf)

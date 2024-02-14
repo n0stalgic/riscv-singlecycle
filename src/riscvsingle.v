@@ -11,6 +11,7 @@ module riscvsingle (
     wire LSE;
     wire Zero;
     wire Negative;
+    wire Overflow;
     wire ALUSrc;
     wire IRWrite;
     wire PCWrite;
@@ -121,6 +122,7 @@ module riscvsingle (
         .B(SrcB),
         .ALUControl(ALUControl),
         .Z(Zero),
+        .V(Overflow),
         .N(Negative),
         .Q(ALUResult)
     );

@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+/*verilator public_flat_rd_on*/
 module ctrl_unit (
     input wire [6:0] op,
     input wire [2:0] funct3,
@@ -21,7 +22,7 @@ module ctrl_unit (
 wire [1:0] ALUOp;
 wire op_5;
 
-
+/*verilator public_off*/
 assign op_5 = op[5];
 
 instr_decode idecoder(

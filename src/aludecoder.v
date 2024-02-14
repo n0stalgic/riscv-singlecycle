@@ -10,11 +10,11 @@ module aludecoder(input  wire [1:0] ALUOp,
       casez ({ALUOp, funct3, op_5, funct7_5})
         7'b00?????:
           ALUControl = 4'b0000;  // add for PC increment
-        7'b0100011:
+        7'b0100?1?:
           ALUControl = 4'b0001;  // subtract for beq/bne
-        7'b0111010:
+        7'b0111?10:
           ALUControl = 4'b1100;  // sltu for bltu/bgeu
-        7'b0110010:
+        7'b0110?10:
           ALUControl = 4'b0101;  // slt for blt/bge
         7'b100000?:
           ALUControl = 4'b0000;  // add 

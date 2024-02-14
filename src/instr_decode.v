@@ -21,14 +21,16 @@ reg Jump;
 reg JumpLink;
 reg Branch;
 
-assign PC_BEQ_BNE = ((Zero ^ funct3[0]) & Branch); 
-assign PC_BLT_BGE = ((Negative ^ (funct3[2] && funct3[0])) & Branch);
+assign PC_BEQ_BNE = ((Zero ^ funct3[0] & ~funct3[1] & ~funct3[2]) & Branch);
+assign PC_BLT_BGE = ((Negative ^ funct3[0] & funct3[2]) & Branch);
 
 always @ (*)
 begin
     if (JumpLink)
         PCSrc = 2'b10;
-    else if ((PC_BEQ_BNE || PC_BLT_BGE) || Jump)
+    else if ((((PC_BEQ_BNE && funct3 <= 1) && Branch) || 
+                (PC_BLT_BGE && funct3 >= 4 && funct3 < 6) && Branch) ||
+                    Jump)
         PCSrc = 2'b01;
     else 
         PCSrc = 2'b00;
