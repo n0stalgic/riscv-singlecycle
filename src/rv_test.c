@@ -1,4 +1,4 @@
-#include <string.h>
+#define BUS_TEST
 
 extern unsigned __stacktop;
 
@@ -7,6 +7,7 @@ int f2(void);
 
 int main(void)
 {
+    #ifdef FULL
     int a = 0x12345678;
     int b = 0x87654321;
     int c = 0x50;
@@ -40,8 +41,11 @@ int main(void)
         res = 0xcafebabe;
     else
         res = 0xdeadbeef;
+    
 
     while (1);
+
+    return 0;
 }
 
 int f1(void)
@@ -58,4 +62,15 @@ int f2(void)
     int b = 2424;
 
     return ~(b ^ a);
+#endif
+#ifdef BUS_TEST
+
+int a = 35;
+int y = a - 100;
+
+while (1);
+
+return 0;
+
+#endif
 }

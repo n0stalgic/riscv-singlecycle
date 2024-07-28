@@ -1,0 +1,7 @@
+src/obj_dir/*
+.hdl_checker/*
+
+*.vcd
+*.map
+*.bin
+*.elf

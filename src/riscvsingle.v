@@ -2,8 +2,8 @@
 /*verilator public_flat_rd_on*/
 module riscvsingle (
             input  logic        clk, reset,
-            output logic        MemWrite,
-            output logic [31:0] iAddr, dAddr, WriteData,
+            output logic        MemWrite, Stb, Ack,
+            output logic [31:0] InstrAddr, BusAddr, WriteData,
             input  logic [31:0] iMemData, dMemData
 );
 
@@ -35,9 +35,9 @@ module riscvsingle (
     wire [31:0] ALUResult;
     /*verilator public_off*/
 
-    assign dAddr = ALUResult;
+    assign BusAddr = ALUResult;
     assign WriteData = Rd2;
-    
+     
 
     mux_3_1 pc_mux (
         .sel(PCSrc),
@@ -47,15 +47,15 @@ module riscvsingle (
         .dout(PCNext)
     );
 
-    DFF pc_reg (
+    dff pc_reg (
         .CLK(clk),
         .RST(reset),
         .D(PCNext),
-        .Q(iAddr)
+        .Q(InstrAddr)
     );
 
     adder pc_4_adder(
-        .A(iAddr),
+        .A(InstrAddr),
         .B(32'b100),
         .Q(PCPlus4)
     );
@@ -66,6 +66,7 @@ module riscvsingle (
     .funct7_5(iMemData[30]),
     .Zero(Zero),
     .Negative(Negative),
+    .Valid(Ack),
     .ResultSrc(ResultSrc),
     .MemWrite(MemWrite),
     .ALUSrc(ALUSrc),
@@ -75,6 +76,7 @@ module riscvsingle (
     .PCSrc(PCSrc),
     .LST(LST),
     .LSE(LSE),
+    .Stb(Stb),
     .RegWrite(RegWrite)
   );
 
@@ -98,7 +100,7 @@ module riscvsingle (
     );
 
     mux_2_1 pc_imm_sel (
-        .in1(iAddr),
+        .in1(InstrAddr),
         .in2(1'b0),
         .sel(ImmSel),
         .dout(PCImm)
@@ -130,7 +132,7 @@ module riscvsingle (
     mux_4_1 result_mux (
         .sel(ResultSrc),
         .in1(ALUResult),
-        .in2(dMemData),
+        .in2(iMemData),
         .in3(PCPlus4),
         .in4(PCTarget),
         .dout(Result)

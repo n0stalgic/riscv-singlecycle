@@ -27,7 +27,7 @@ initial begin
  /* Very primitive boot ROM. Sets the stack pointer to address 
     to 0x200 before we load in the program. "Load" in user code at address 0x4  */
 
-    RAM[0] = 8'h20;
+    RAM[0] = 8'h40;
     RAM[1] = 8'h00;
     RAM[2] = 8'h01;
     RAM[3] = 8'h13;

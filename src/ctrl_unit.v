@@ -6,6 +6,7 @@ module ctrl_unit (
     input wire funct7_5,
     input wire Zero,
     input wire Negative,
+    input wire Valid,
     output reg [1:0] ResultSrc,
     output reg MemWrite,
     output reg ALUSrc,
@@ -14,6 +15,7 @@ module ctrl_unit (
     output reg RegWrite,
     output reg [1:0] PCSrc,
     output reg LSE,
+    output reg Stb,
     output reg [2:0] LST,
     output reg [3:0] ALUControl
 
@@ -30,11 +32,13 @@ instr_decode idecoder(
     .funct3(funct3),
     .Zero(Zero),
     .Negative(Negative),
+    .Valid(Valid),
     .ResultSrc(ResultSrc),
     .MemWrite(MemWrite),
     .ALUSrc(ALUSrc),
     .ImmSrc(ImmSrc),
     .ImmSel(ImmSel),
+    .Stb(Stb),
     .RegWrite(RegWrite),
     .ALUOp(ALUOp),
     .PCSrc(PCSrc)

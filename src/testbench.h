@@ -44,9 +44,9 @@ template<class MODULE> class TESTBENCH
 
         virtual void reset(void)
         {
-            m_core->reset = 1;
+            m_core->reset_i = 1;
             this->tick();
-            m_core->reset = 0;
+            m_core->reset_i = 0;
         }
 
         virtual void opentrace(const char* vcdname)
@@ -81,7 +81,7 @@ template<class MODULE> class TESTBENCH
             vluint32_t ALU_Src_B;
             
             m_tickcount++;
-            m_core->clk = 0;
+            m_core->clk_i = 0;
             m_core->eval();
             // if (m_trace)
             // {
@@ -90,7 +90,7 @@ template<class MODULE> class TESTBENCH
             // }
 
             // toggle clock
-            m_core->clk = 1;
+            m_core->clk_i = 1;
             m_core->eval();
             decode();
             if (m_trace)
@@ -102,7 +102,7 @@ template<class MODULE> class TESTBENCH
             ALU_Control = vriscv->riscv_sys__DOT__rvcpu__DOT__ALUControl;
             A = vriscv->riscv_sys__DOT__rvcpu__DOT__ALU__DOT__A;
             B = vriscv->riscv_sys__DOT__rvcpu__DOT__ALU__DOT__B;
-            PC = vriscv->riscv_sys__DOT__rvcpu__DOT__iAddr;
+            PC = vriscv->riscv_sys__DOT__rvcpu__DOT__InstrAddr;
             PC_Write = vriscv->riscv_sys__DOT__rvcpu__DOT__PCWrite;
             Reg_Write = vriscv->riscv_sys__DOT__rvcpu__DOT__regfile__DOT__WE3;
             ALU_actual = vriscv->riscv_sys__DOT__rvcpu__DOT__ALU__DOT__Q;
@@ -211,7 +211,7 @@ template<class MODULE> class TESTBENCH
             }
 
             // trigger falling edge
-            m_core->clk = 0;
+            m_core->clk_i = 0;
             m_core->eval();
             if (m_trace)
             {

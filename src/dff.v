@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 /*verilator public_flat_rd_on*/
 
-module DFF (
+module dff (
     CLK, RST, D, Q
 );
 

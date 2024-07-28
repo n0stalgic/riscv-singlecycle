@@ -3,6 +3,7 @@ module instr_decode (
     input [6:0] op,
     input Zero,
     input Negative,
+    input Valid,
     input [2:0] funct3,
     output reg [1:0] ResultSrc,
     output reg MemWrite,
@@ -10,6 +11,7 @@ module instr_decode (
     output reg [2:0] ImmSrc,
     output reg ImmSel,
     output reg RegWrite,
+    output reg Stb,
     output reg [1:0] ALUOp,
     output reg [1:0] PCSrc
 
@@ -48,6 +50,9 @@ always @ (*) begin
     ImmSel = 1'b0;
     JumpLink = 1'b0;
 
+    if (!Valid)
+        Stb = 1'b0;
+
     casez (op)
         7'b0110011: begin         // R-type
             RegWrite = 1'b1;
@@ -61,15 +66,17 @@ always @ (*) begin
             ImmSrc    = 3'b000;
             ALUOp     = 2'b00;
             ALUSrc    = 1'b1;
+            Stb       = 1'b1;
         end
  
         7'b0100011: begin        // mem store
-            RegWrite = 1'b0;
-            ImmSrc   = 3'b001;
-            ALUOp    = 2'b00;
-            ALUSrc   = 1'b1;
-            MemWrite = 1'b1;
+            RegWrite  = 1'b0;
+            ImmSrc    = 3'b001;
+            ALUOp     = 2'b00;
+            ALUSrc    = 1'b1;
+            MemWrite  = 1'b1;
             ResultSrc = 2'b01;
+            Stb       = 1'b1;
         end
 
         7'b0010011: begin         // I-Type
@@ -113,6 +120,7 @@ always @ (*) begin
             ImmSel   = 1'b0;
             ResultSrc = 2'b11;
         end
+                  
 
 endcase
 end
